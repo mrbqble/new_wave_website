@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 40px 0px 40px 0px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+img {
+    height: 45px;
+    width: 45px;
+}
+
+.last li {
+    margin-top: 10px;
+}
+
+.last a {
+    margin: 0;
+    padding: 0;
+    margin-right: 10px;
+}

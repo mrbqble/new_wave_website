@@ -1,0 +1,12 @@
+.data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-weight: 600;
+    margin-right: 100px;
+}
+
+.inf {
+    display: flex;
+    flex-direction: row;
+}

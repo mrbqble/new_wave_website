@@ -1,0 +1,38 @@
+.full {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input {
+    padding: 15px 20px 15px 20px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 400px;
+}
+
+.full form {
+    display: block;
+    padding: 30px 40px 30px 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    background-color: rgba(208, 213, 255, 0.5);;
+    margin-bottom: 40px;
+}
+
+form .button {
+    font-size: 20px;
+    text-align: center;
+    padding: 17px;
+}
+
+form .button:hover {
+    padding: 16px;
+}
+
+form p {
+    font-weight: 600;
+}

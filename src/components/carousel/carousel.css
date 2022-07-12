@@ -1,0 +1,46 @@
+.eventinfo {
+    text-align: left;
+    width: 40vw;
+}
+
+.container {
+    display: flex;
+    margin-left: 10vw;
+}
+
+.text {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 35px;
+}
+
+.eventimages {
+    margin-left: 10vw;
+    display: flex;
+    overflow-x: hidden;
+    text-align: left;
+}
+
+.image {
+    height: 420px;
+    width: 420px;
+}
+
+.eventnumber {
+    color: #D0D5FF;
+    font-size: 48px;
+}
+
+.arr {
+    height: 18px;
+    width: 12px;
+}
+
+.eventimages .link {
+    padding: 15px 20px 15px 20px;
+    border: #D0D5FF solid 1px;
+    margin-top: -4px;
+}
