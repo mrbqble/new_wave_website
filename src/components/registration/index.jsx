@@ -1,31 +1,32 @@
 import { useState } from 'react';
 import './registration.css';
 import {useNavigate} from 'react-router-dom';
-import { registration } from '../../actions/user';
+import { DefaultContext } from "../../Context";
+import { useContext } from "react";
 
 const Registration = () => {
-
+    const { setEmail, setPassword, password } = useContext(DefaultContext);
     const navigate = useNavigate();
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [secpass, setSecPass] = useState('');
 
     const handleEmail = (event) => {
         setEmail(event.target.value);
     };
-
+    
     const handlePassword = (event) => {
         setPassword(event.target.value);
-    }
+    };
 
     const handleSecPass = (event) => {
         setSecPass(event.target.value);
-    }
+    };
 
     const handleOnClick = () => {
-        registration(email, password);
-        navigate('/fullform');
+        if (secpass === password) {
+            navigate('/fullform');
+        } else {
+            alert("Enter the password correctly!")
+        }
     }
 
     return (

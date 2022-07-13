@@ -1,12 +1,22 @@
 import axios from "axios";
 
-export const registration = async (email, password) => {
+export const registration = async (email, password, name, dateOfBirth, country, city, affiliation, grade, phoneNumber, instagram, telegram, volunteeringHours) => {
     try {
         const response = await axios.post('http://localhost:1500/api/auth/registration', {
             email,
-            password
+            password,
+            name,
+            dateOfBirth,
+            country,
+            city,
+            affiliation,
+            grade,
+            phoneNumber,
+            instagram,
+            telegram,
+            volunteeringHours
         });
-        alert(response.data.message);
+        console.log(response.data.message);
     } catch (error) {
         alert(error.response.data.message);
     }
@@ -20,10 +30,20 @@ export const login = async (email, password, handleSetIsAuth) => {
         });
         localStorage.setItem('token', response.data.token);
         handleSetIsAuth();
-        alert("Logged in succesfully!")
+        console.log("Logged in succesfully!")
     } catch (e) {
         alert(e.response.data.message);
     }
 };
 
-// export const logout = async ()
+export const profile = async (email) => {
+    try {
+        const response = await axios.post('http://localhost:1500/api/auth/profile', {
+            email
+        });
+        console.log("Got data succesfully!");
+        return response.data;
+    } catch (e) {
+        alert(e.response.data.message);
+    }
+};

@@ -1,9 +1,12 @@
 import './navbar.css';
 import { useNavigate } from "react-router-dom";
+import { DefaultContext } from "../../Context";
+import { useContext } from "react";
 
-const Navbar = ({isAuth}) => {
+const Navbar = () => {
 
     const navigate = useNavigate();
+    const { isAuth } = useContext(DefaultContext);
 
     return (
         <div className="navbar">

@@ -6,7 +6,7 @@
 }
 
 input {
-    padding: 15px 20px 15px 20px;
+    padding: 15px 20px;
     font-size: 20px;
     margin-top: 15px;
     margin-bottom: 30px;
@@ -35,4 +35,12 @@ form .button:hover {
 
 form p {
     font-weight: 600;
+}
+
+select {
+    padding: 15px 20px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 444px;
 }
