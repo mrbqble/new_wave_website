@@ -1,12 +1,51 @@
 .data {
+    gap: 25px;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    font-size: 18px;
     font-weight: 600;
     margin-right: 100px;
+    flex-direction: column;
 }
 
 .inf {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.profile {
+    margin-bottom: 40px;
+}
+
+.data img {
+    width: 300px;
+    height: 300px;
+}
+
+.btn {
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid;
+    text-align: center;
+}
+
+.cert {
+    color: white;
+    background-color: #0013BC;
+}
+
+.cert:hover {
+    color: #0013BC;
+    background-color: white;
+} 
+
+.join {
+    color: #0013BC;
+    border-color: #0013BC;
+}
+
+.join:hover {
+    border-color: #D0D5FF;
 }

@@ -1,27 +1,38 @@
 import './navbar.css';
-import { useNavigate } from "react-router-dom";
-import { DefaultContext } from "../../Context";
 import { useContext } from "react";
+import { DefaultContext } from "../../Context";
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
-
+export const Navbar = () => {
+    
     const navigate = useNavigate();
-    const { isAuth } = useContext(DefaultContext);
+    const {isAuth} = useContext(DefaultContext);
 
     return (
         <div className="navbar">
-            <a onClick={() => navigate('/')} className="logo">NEW WAVE</a>
+            <a
+                className="logo"
+                onClick={() => navigate("/")}
+            >NEW WAVE</a>
             <div className="links">
-                <a>ABOUT US</a>
-                <a>TAKE ACTION!</a>
-                <a>COMMUNITY</a>
-                <a style = {{color: "#0013BC", }}>OUR PROJECTS</a>
+                <a onClick={() => navigate("/about")}>ABOUT US</a>
+                <a onClick={() => navigate("/takeaction")}>TAKE ACTION!</a>
+                <a onClick={() => navigate("/community")}>COMMUNITY</a>
+                <a
+                    onClick={() => navigate("/projects")}
+                    style={{
+                        color: "#0013BC"
+                }}>OUR PROJECTS</a>
             </div>
             <div className="links">
-                {isAuth ? <a onClick={() => navigate('/profile')}>PROFILE</a> : <a onClick={() => navigate('/signin')}>LOGIN</a>}
-                <a className="button">DONATE</a>
+                {isAuth
+                    ? <a onClick={() => navigate("/profile")}>PROFILE</a>
+                    : <a onClick={() => navigate("/signin")}>LOGIN</a>}
+                <a
+                    className="button"
+                    onClick={() => navigate("/donate")}
+                >DONATE</a>
             </div>
         </div>
     );
-}
-export default Navbar;
+};

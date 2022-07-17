@@ -2,15 +2,16 @@
 
 * {
   margin: 0;
-  font-family: "Inter";
   color: black;
   max-width: 1920px;
+  font-family: "Inter";
 }
 
 hr {
-  background-color: #D0D5FF;
   height: 2px;
+  border: none;
   margin-left: 40px;
   margin-right: 40px;
-  border: none;
+  background-color: #D0D5FF;
+
 }

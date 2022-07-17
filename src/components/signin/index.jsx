@@ -1,11 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { login } from "../../actions/user";
-import { DefaultContext } from "../../Context";
 import { useContext } from "react";
+import { login } from "../../actions/user";
+import { useNavigate } from "react-router-dom";
+import { DefaultContext } from "../../Context";
 
-const Signin = () => {
-  const navigate = useNavigate();
-  const {handleSetIsAuth, setEmail, setPassword, email, password} = useContext(DefaultContext);
+export const Signin = () => {
+
+  const {
+    email,
+    password,
+    setEmail,
+    setPassword,
+    handleSetIsAuth,
+  } = useContext(DefaultContext);
+  const navigate =  useNavigate();
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -16,8 +23,12 @@ const Signin = () => {
   };
 
   const handleOnClick = () => {
-    login(email, password, handleSetIsAuth);
-    navigate('/');
+    login(
+      email,
+      password,
+      handleSetIsAuth
+    );
+    navigate('/')
   };
 
   return (
@@ -28,22 +39,21 @@ const Signin = () => {
           <p>E-mail</p>
           <input
             type="text"
-            placeholder="example@mail.com"
             onChange={handleEmail}
+            placeholder="example@mail.com"
           />
           <p>Enter a password</p>
           <input
             type="password"
-            placeholder="Your password"
             onChange={handlePassword}
+            placeholder="Your password"
           />
         </div>
-        <a onClick={() => handleOnClick()} className="button">
-          SIGN IN
-        </a>
+        <a
+          className="button"
+          onClick={() => handleOnClick()}
+        >SIGN IN</a>
       </form>
     </div>
   );
 };
-
-export default Signin;

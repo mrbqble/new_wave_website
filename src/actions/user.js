@@ -1,49 +1,54 @@
 import axios from "axios";
 
-export const registration = async (email, password, name, dateOfBirth, country, city, affiliation, grade, phoneNumber, instagram, telegram, volunteeringHours) => {
-    try {
-        const response = await axios.post('http://localhost:1500/api/auth/registration', {
-            email,
-            password,
-            name,
-            dateOfBirth,
-            country,
-            city,
-            affiliation,
-            grade,
-            phoneNumber,
-            instagram,
-            telegram,
-            volunteeringHours
-        });
-        console.log(response.data.message);
-    } catch (error) {
-        alert(error.response.data.message);
-    }
-};
-
-export const login = async (email, password, handleSetIsAuth) => {
-    try {
-        const response = await axios.post('http://localhost:1500/api/auth/login', {
-            email,
-            password
-        });
-        localStorage.setItem('token', response.data.token);
-        handleSetIsAuth();
-        console.log("Logged in succesfully!")
-    } catch (e) {
-        alert(e.response.data.message);
-    }
+export const getEvents = async () => {
+    const response = await axios.post('http://localhost:1500/api/auth/events');
+    return response.data;
 };
 
 export const profile = async (email) => {
-    try {
-        const response = await axios.post('http://localhost:1500/api/auth/profile', {
-            email
-        });
-        console.log("Got data succesfully!");
-        return response.data;
-    } catch (e) {
-        alert(e.response.data.message);
-    }
+    const response = await axios.post('http://localhost:1500/api/auth/profile', {email});
+    return response.data;
+};
+
+export const login = async (
+    email,
+    password,
+    handleSetIsAuth
+) => {
+    const response = await axios.post('http://localhost:1500/api/auth/login', {
+        email,
+        password
+    });
+    handleSetIsAuth();
+    localStorage.setItem('token', response.data.token);
+};
+
+export const registration = async (
+    name,
+    city,
+    email,
+    grade,
+    country,
+    password,
+    telegram,
+    instagram,
+    dateOfBirth,
+    affiliation,
+    phoneNumber,
+    volunteeringHours
+) => {
+    await axios.post('http://localhost:1500/api/auth/registration', {
+        name,
+        city,
+        email,
+        grade,
+        country,
+        password,
+        telegram,
+        instagram,
+        dateOfBirth,
+        affiliation,
+        phoneNumber,
+        volunteeringHours
+    });
 };

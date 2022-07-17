@@ -1,16 +1,15 @@
 .reg {
-    margin-top: 20px;
     display: flex;
+    margin-top: 20px;
     flex-direction: column;
     justify-content: center;
 }
 
 form {
-    display: block;
-    padding: 30px 40px 30px 40px;
-    align-self: center;
     display: flex;
-    flex-direction: column;
-    background-color: rgba(208, 213, 255, 0.5);;
+    align-self: center;
     margin-bottom: 40px;
+    flex-direction: column;
+    padding: 30px 40px 30px 40px;
+    background-color: rgba(208, 213, 255, 0.5);
 }
