@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { login } from "../../actions/user";
+import { login, profile } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 import { DefaultContext } from "../../Context";
 
@@ -8,6 +8,7 @@ export const Signin = () => {
   const {
     email,
     password,
+    setUser,
     setEmail,
     setPassword,
     handleSetIsAuth,
@@ -28,6 +29,7 @@ export const Signin = () => {
       password,
       handleSetIsAuth
     );
+    profile(email).then(response => setUser(response));
     navigate('/')
   };
 

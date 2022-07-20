@@ -1,0 +1,7 @@
+.list {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgba(208, 213, 255, 0.5);
+}

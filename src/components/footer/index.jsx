@@ -22,6 +22,10 @@ export const Footer = () => {
                 title: 'See our financials',
                 href: '/'
             },
+            {
+                title: 'Verify documents',
+                href: '/verify'
+            }
         ],
         [
             {
@@ -88,8 +92,6 @@ export const Footer = () => {
                     </li>
                     <li>© 2020</li>
                     <li>{message}</li>
-                </ul>
-                <ul>
                     <li>
                         <a
                             href="/tiktok"
@@ -100,8 +102,6 @@ export const Footer = () => {
                                 alt="tiktok icon"
                             />
                         </a>
-                    </li>
-                    <li>
                         <a href="https://www.instagram.com/newwave_club">
                             <img
                                 src={InstagramIcon}

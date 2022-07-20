@@ -7,6 +7,7 @@ import {useNavigate} from 'react-router-dom';
 import plasticInSea from "../imgs/plastic_in_sea.png";
 import plasticbottles from "../imgs/plastic_bottles.png";
 
+
 export const Home = () => {
 
     const navigate = useNavigate();

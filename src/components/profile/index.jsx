@@ -1,6 +1,5 @@
 import './profile.css';
 import logo from "../imgs/nw.png";
-import { profile } from '../../actions/user';
 import { certificate } from '../certificate';
 import { DefaultContext } from "../../Context";
 import { useNavigate } from 'react-router-dom';
@@ -9,34 +8,32 @@ import { useContext, useEffect, useState } from "react";
 export const Profile = () => {
 
     const navigate = useNavigate();
-    const [user, setUser] = useState([]);
     const year = new Date().getFullYear();
-    const {email} = useContext(DefaultContext);
+    const {email, user} = useContext(DefaultContext);
 
     const handleCertificate = () => {
-        certificate(
-            user.name,
-            user.city,
-            year,
-            user.country,
-            user.volunteeringHours    
-        );
+        if (user.volunteeringHours){
+            certificate(
+                user.name,
+                user.city,
+                user.code,
+                year,
+                email,
+                user.country,
+                user.volunteeringHours
+            );
+        } else {
+            alert("У вас 0 волонтерских часов чтобы получить сертификат. Накопите больше участвуя на мероприятиях.")
+        }
+        
     };
 
-    useEffect(() => {
-        profile(email).then(response => setUser(response));
-    }, [])
-
     return (
-        <div className="profile">
+        <div className="block">
             <h1>Profile</h1>
             <div className='inf'>
                 <div className='inf'>
-                    <div
-                        className="data"
-                        style={{
-                            color: '#757575'
-                    }}>
+                    <div className="data">
                         <span>Full name: </span>
                         <span>E-mail:</span>
                         <span>City:</span>

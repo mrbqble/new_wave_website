@@ -1,6 +1,17 @@
 .eventinfo {
-    width: 40vw;
+    display: flex;
     text-align: left;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.eventinfo h1 {
+    text-align: left;
+    margin-bottom: 0px;
+}
+
+.eventinfo p {
+    width: 30vw;
 }
 
 .container {

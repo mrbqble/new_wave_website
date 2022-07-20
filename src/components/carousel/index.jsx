@@ -1,12 +1,14 @@
 import './carousel.css';
+import { useContext } from "react";
 import bluearr from "../imgs/bluearr.png";
 import { useState, useEffect } from 'react';
-import { getEvents } from '../../actions/user';
+import { DefaultContext } from "../../Context";
+import { useNavigate } from 'react-router-dom';
 
 export const Carousel = () => {
 
-    const [events, setEvents] = useState();
-    const [current, setCurrent] = useState(0);
+    const {setEvent, events, current, setCurrent} = useContext(DefaultContext);
+    const navigate = useNavigate();
 
     const handleNextEvent = () => {
         setCurrent((current + 1) % events.length);
@@ -16,9 +18,10 @@ export const Carousel = () => {
         setCurrent(current ? (current - 1) % events.length : events.length - 1);
     };
 
-    useEffect(() => {
-        getEvents().then(response => setEvents(response));
-    }, []);
+    const handleMoreEvent = () => {
+        setEvent(events[current]);
+        navigate('/event');
+    };
 
     return (
         <div className='container'>
@@ -32,8 +35,7 @@ export const Carousel = () => {
                         <font>{events[current].subtitle}</font>
                     </h1>
                     <div style={{
-                        marginLeft: '5vw',
-                        marginBottom: '6vh'
+                        marginLeft: '5vw'
                     }}>
                         <p className='text'>{events[current].text}</p>
                         <p style={{
@@ -45,8 +47,8 @@ export const Carousel = () => {
                         </h2>
                     </div>
                     <a
-                        href="/more"
                         className='link'
+                        onClick={() => handleMoreEvent()}
                     >
                         LEARN MORE <img
                             src={bluearr}
@@ -104,6 +106,9 @@ export const Carousel = () => {
                             alt="event"
                             className='image'
                             src={events[(current + 1) % events.length].image}
+                            style={{
+                                opacity: "50%"
+                            }}
                         />
                     </div>
                 </div>

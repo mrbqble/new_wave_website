@@ -213,9 +213,20 @@ export const Fullform = () => {
                         </select>
                         <p>Phone number</p>
                         <PhoneInput
+                            style={{
+                                marginTop: "15px",
+                                
+                            }}
                             country={'kz'}
                             value={phoneNumber}
                             onChange={phone => setPhoneNumber("+"+phone)}
+                            className="containerPhone"
+                            inputStyle={{
+                                height: "58px",
+                                fontSize: "20px",
+                                width: "444px",
+                                borderRadius: "0px"
+                            }}
                         />
                     </div>
                     <a
