@@ -8,9 +8,7 @@ export const ReportList = () => {
     const [reports, setReports] = useState();
     const [search, setSearch] = useState('');
     const { events } = useContext(DefaultContext);
-    const arraySF = reports?.filter(item => item.coordinator.substring(0, search.length).toLowerCase() === search.toLowerCase());
-
-    console.log(reports, events);
+    const arraySF = reports?.filter(item => item.coordinator?.substring(0, search.length).toLowerCase() === search.toLowerCase());
 
     useEffect(() => {
         getReports().then((response) => setReports(response));

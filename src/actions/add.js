@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const link = `https://frozen-thicket-00434.herokuapp.com/api/add`;
+const link1 = `https://frozen-thicket-00434.herokuapp.com/api/add`;
+const link = `http://localhost:1500/api/add`;
+
 
 export const getEvents = async () => {
     const response = await axios.post(`${link}/events`);

@@ -26,7 +26,7 @@ export const Report = () => {
 
     useEffect(() => {
         setUsers(filteredEvents 
-            ? [...filteredEvents[eventid].attended.sort((a, b) => a.name.localeCompare(b.name)), ...users.filter(item => !filteredEvents[eventid].attended.find(att => att.email === item.email))] 
+            ? [...filteredEvents[eventid]?.attended?.sort((a, b) => a.name.localeCompare(b.name)), ...users?.filter(item => !filteredEvents[eventid]?.attended?.find(att => att.email === item.email))] 
             : users)
     }, [eventid])
 
@@ -58,11 +58,11 @@ export const Report = () => {
                     <div className="inf" style={{alignItems: "normal", justifyContent: "left"}}>
                         <div className="data">    
                             <span>№:</span>
-                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid].number : "" : ""}</span>
+                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.number : "" : ""}</span>
                         </div>
                         <div className="data">
                             <span>Coordinator:</span>
-                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid].coordinator : "" : ""}</span>
+                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.coordinator : "" : ""}</span>
                         </div>
                         <div className="data">
                             <span>Type:</span>

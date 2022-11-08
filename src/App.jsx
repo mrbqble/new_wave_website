@@ -8,7 +8,7 @@ import { Profile } from './components/auth/profile';
 import { Fullform } from './components/auth/fullform';
 import { Home } from './components/mainpage/home/index';
 import { AdminPage } from './components/functions/admin';
-import { CreateEvent } from "./components/functions/event";
+import { CreateEvent } from "./components/functions/createEvent";
 import { Map } from './components/functions/additional/map';
 import { Navbar } from './components/mainpage/navbar/index';
 import { Footer } from './components/mainpage/footer/index';
