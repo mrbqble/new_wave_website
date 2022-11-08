@@ -1,6 +1,6 @@
 import "./documents.css";
 import { useContext } from "react";
-import { DefaultContext } from "../../../Context";
+import { DefaultContext } from "../../../../Context";
 
 export const Document = () => {
 

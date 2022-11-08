@@ -1,12 +1,11 @@
 import { useContext } from "react";
-import { DefaultContext } from "../../../Context";
+import { DefaultContext } from "../../../../Context";
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
 export const Rating = () => {
 
     const {users} = useContext(DefaultContext);
-    console.log(users);
 
     return (
         <div className="reg block">

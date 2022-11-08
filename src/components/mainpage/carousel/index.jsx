@@ -9,18 +9,29 @@ import { useNavigate } from 'react-router-dom';
 import { DefaultContext } from "../../../Context";
 import { EffectCreative, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 export const Carousel = () => {
 
     let date;
+    const year = new Date();
     const navigate = useNavigate();
     const {events, setCurrent, width, months} = useContext(DefaultContext);
+    const [availableEvents, setAvailableEvents] = useState();
 
     const handleMoreEvent = (index) => {
         setCurrent(index)
         navigate('/event');
     };
+
+    useEffect(() => {
+        setAvailableEvents(events?.filter(item => {
+            date = item.date.split("-")
+            return year.getFullYear() <= date[0] && (year.getMonth() + 1) <= date[1] && year.getDate() <= date[2];
+        }))
+    }, [events])
 
     return (
         <Swiper
@@ -46,8 +57,8 @@ export const Carousel = () => {
                 zIndex: "1"
             }}
         >
-            {events
-                ? events.map((item, index) =>
+            {availableEvents
+                ? availableEvents.map((item, index) =>
                     <>{date = item.date.split('-')}
                         <SwiperSlide key={index}
                             style={{backgroundColor: "white"}}
@@ -131,7 +142,7 @@ export const Carousel = () => {
                                 </div>
                             </div>
                         </SwiperSlide></>)
-                : <></>}
+                : <h2>There are no upcoming events at the moment.</h2>}
             </Swiper>
     );
 };

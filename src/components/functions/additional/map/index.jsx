@@ -2,12 +2,12 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { useState } from "react";
 import "./map.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { getPlaces } from "../../../actions/user";
+import { getPlaces } from "../../../../actions/add";
 import { useEffect } from "react";
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css';
 import { useContext } from "react";
-import { DefaultContext } from "../../../Context";
+import { DefaultContext } from "../../../../Context";
 
 
 export const Map = () => {

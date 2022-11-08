@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const link = `https://frozen-thicket-00434.herokuapp.com/api/add`;
+const link = `http://localhost:1500/api/add`;
 
 export const getEvents = async () => {
     const response = await axios.post(`${link}/events`);
@@ -9,6 +9,11 @@ export const getEvents = async () => {
 
 export const getUsers = async () => {
     const response = await axios.post(`${link}/users`);
+    return response.data;
+};
+
+export const getReports = async () => {
+    const response = await axios.post(`${link}/reports`);
     return response.data;
 };
 
@@ -34,8 +39,8 @@ export const leave = async (email, _id) => {
     await axios.post(`${link}/leave`, {email, _id});
 }
 
-export const report = async (bags, type, eventid, addinfo, attended, distance, coordinator) => {
-    const response = await axios.post(`${link}/report`, {bags, type, eventid, addinfo, attended, distance, coordinator});
+export const report = async (bags, type, eventID, addInfo, attended, distance) => {
+    const response = await axios.post(`${link}/report`, {bags, type, eventID, addInfo, attended, distance});
     alert(response.data.message)
 }
 
@@ -52,4 +57,14 @@ export const addUniversity = async (university) => {
 export const addEducation = async (name, city, school, college) => {
     const response = await axios.post(`${link}/addEdu`, {name, city, school, college});
     return response.data;
+}
+
+export const getPlaces = async (latitude, longtitude) => {
+    const response = await axios.post(`${link}/places`, {latitude, longtitude});
+    return response.data;
+}
+
+export const createEvent = async (item) => {
+    const response = await axios.post("http://localhost:1500/api/add/createEvent", {item});
+    return response;
 }

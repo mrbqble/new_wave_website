@@ -16,6 +16,7 @@ export const Event = () => {
     let date;
     const year = new Date();
     const [isAttended, setIsAttended] = useState(false);
+    const [availableEvents, setAvailableEvents] = useState();
     const {user, setEvents, events, current, setCurrent, months, setAlert, setTitle, setText, setButton} = useContext(DefaultContext);
 
     const handleAttend = () => {
@@ -48,6 +49,13 @@ export const Event = () => {
         setCurrent(slide.activeIndex ? (slide.activeIndex - 1) % events.length : events.length - 1);
     }
 
+    useEffect(() => {
+        setAvailableEvents(events?.filter(item => {
+            date = item.date.split("-")
+            return year.getFullYear() <= date[0] && (year.getMonth() + 1) <= date[1] && year.getDate() <= date[2];
+        }))
+    }, [events])
+
     return (
         <div className="reg">
             <Swiper
@@ -70,8 +78,8 @@ export const Event = () => {
                     zIndex: "1"
                 }}
             >
-                {events
-                    ? events.map((item, index) => 
+                {availableEvents
+                    ? availableEvents.map((item, index) => 
                     <>{date = item.date.split('-')}
                     <SwiperSlide style={{backgroundColor: "white"}} key={index}>
                         <div className="container event block" style={{justifyContent: "space-between", marginLeft: "0px", padding: "50px 0px"}}>
@@ -105,8 +113,8 @@ export const Event = () => {
                                     <p className="text" style={{marginBottom: "0px"}}>Available places: <font>{item.places - item.attended.length}</font></p>
                                 </div>
                                 {isAttended
-                                    ? <a className={`join btn ${year.getFullYear() <= date[0] ? (year.getMonth() + 1) <= date[1] ? year.getDate() <= date[2] ? "" : "disabled" : "disabled" : "disabled"}`} onClick={() => handleLeave()}>LEAVE EVENT</a>
-                                    : <a className={`cert btn ${year.getFullYear() <= date[0] ? (year.getMonth() + 1) <= date[1] ? year.getDate() <= date[2] ? "" : "disabled" : "disabled" : "disabled"}`} onClick={() => handleAttend()}>ATTEND EVENT</a>
+                                    ? <a className='join btn' onClick={() => handleLeave()}>LEAVE EVENT</a>
+                                    : <a className='cert btn' onClick={() => handleAttend()}>ATTEND EVENT</a>
                                 }
                                 <div>
                                     <p className="text">List of volunteers attending the event:</p>
@@ -130,7 +138,7 @@ export const Event = () => {
                         </div>
                     </SwiperSlide></>
                     )
-                    : <></>
+                    : <h2>There are no upcoming events at the moment.</h2>
                 }
             </Swiper>
         </div>

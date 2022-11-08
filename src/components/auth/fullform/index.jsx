@@ -65,17 +65,17 @@ export const Fullform = () => {
         setSchools(edu?.countries?.find(country => country.name === item.country)?.cities?.find(city => city.name === item.city)?.schools)
         setItem({...item, school: cities?.filter(city => city.name === item.city).length
             ? item.affiliation === "School"
-                ? cities?.find(city => city.name === item.city)?.schools[0]
+                ? edit && cities?.find(city => city.name === item.city)?.schools?.find(item => item === user?.school) ? user?.school : cities?.find(city => city.name === item.city)?.schools[0]
                 : item.affiliation === "College"
-                    ? countries?.find(country => country.name === item.country)?.colleges[0]
-                    : universities
+                    ? edit && countries?.find(country => country.name === item.country)?.colleges?.find(item => item === user?.school) ? user?.school : countries?.find(country => country.name === item.country)?.colleges[0]
+                    : edit && universities?.find(item => item.name === user?.school) ? user?.school : universities
                         ? universities[0].name
                         : ""
             : ""})
     }, [edu, item.country, item.city, item.affiliation])
 
     useEffect(() => {
-        setItem({...item, city: cities ? cities[0].name : ""})
+        setItem({...item, city: edit && cities?.find(item => item.name === user?.city) ? user?.city : cities ? cities[0].name : ""})
     }, [cities])
 
     useEffect(() => {
@@ -212,7 +212,7 @@ export const Fullform = () => {
                             title={item.affiliation}
                             value={item.school}
                             onChange={(event) => setItem({...item, school: event.target.value})}
-                            options={item.affiliation === "School" ? schools : item.affiliation === "College" ? colleges : universities.map((item) => {return item.name})}
+                            options={item.affiliation === "School" ? schools : item.affiliation === "College" ? colleges : universities?.map((item) => {return item.name})}
                             notListed={true}
                         />
                         <Select

@@ -2,6 +2,7 @@ import './footer.css';
 import TiktokIcon from "../../imgs/tiktok.png";
 import { useNavigate } from 'react-router-dom';
 import InstagramIcon from "../../imgs/instagram.png";
+import YoutubeIcon from "../../imgs/youtube.png";
 
 export const Footer = () => {
 
@@ -119,6 +120,14 @@ export const Footer = () => {
                             <img
                                 src={InstagramIcon}
                                 alt="instagram icon"
+                        /></a>
+                        <a
+                            href="https://youtube.com" 
+                            target="_blank"
+                        >
+                            <img
+                                src={YoutubeIcon}
+                                alt="Youtube icon"
                         /></a>
                     </li>
                 </ul>

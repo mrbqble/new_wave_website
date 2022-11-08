@@ -1,47 +1,26 @@
+import validator from "validator";
 import { profile } from './actions/user';
 import { DefaultContext } from "./Context";
 import { useState, useEffect } from 'react';
-import { Map } from './components/functions/map';
 import { Signin } from './components/auth/signin';
 import { Event } from "./components/mainpage/event";
 import { Profile } from './components/auth/profile';
-import { getEducation, getEvents, getUsers } from './actions/add';
 import { Fullform } from './components/auth/fullform';
-import { Rating } from './components/functions/rating';
 import { Home } from './components/mainpage/home/index';
 import { AdminPage } from './components/functions/admin';
+import { CreateEvent } from "./components/functions/event";
+import { Map } from './components/functions/additional/map';
 import { Navbar } from './components/mainpage/navbar/index';
 import { Footer } from './components/mainpage/footer/index';
-import { Document } from './components/functions/documents';
 import { Report } from "./components/functions/report/index";
 import { Registration } from './components/auth/registration';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Rating } from './components/functions/additional/rating';
+import { getEducation, getEvents, getUsers } from './actions/add';
 import { Verificator } from './components/functions/verification';
-import validator from "validator";
-
-// Functions:
-//  1)  Sign up                             Done
-//  2)  Sign in                             Done
-//  3)  Profile                             Done
-//  4)  Documents                           Done half
-//  5)  Edit profile                        Done
-//  6)  Event declaration                   Done
-//  7)  Event uploader app                  Done
-//  8)  Creating of certificates            Done
-//  9)  Map with recycling points           Done
-//  10) Animations carousel/header          Done
-//  11) Verification of certificates        Done
-//  12) Registering to/leaving events       Done
-//  13) Rating of volunteers by hours       Done
-//  14) Reporting system for coordinators   Done
-//  15) Donating                            
-//  16) Adaptives                           
-//  17) Pagination                          
-//  18) Email sending                       
-//  19) Password recovery                   
-//  20) Recycling information               
-//  21) Attaching tasks to coordinators     
-//  22) Profile photo                       Done
+import { ReportList } from './components/functions/admin/ReportList';
+import { Document } from './components/functions/additional/documents';
+import { ChangeStatus } from './components/functions/admin/ChangeStatus';
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -77,10 +56,10 @@ function App() {
 };
   
   useEffect(() => {
-    profile(email, token).then(response => setUser(response));
     getEvents().then(response => setEvents(response));
-    getUsers().then(response => setUsers(response.sort((a, b) => a.firstName.localeCompare(b.firstName))));
     getEducation().then(response => setEdu(response));
+    profile(email, token).then(response => setUser(response));
+    getUsers().then(response => setUsers(response.sort((a, b) => a.firstName.localeCompare(b.firstName))));
   }, []);
 
     useEffect(() => {
@@ -89,36 +68,7 @@ function App() {
 
   return (
     <div className="App">
-      <DefaultContext.Provider value={{
-        width,
-        edu,
-        user,
-        edit,
-        users,
-        email,
-        token,
-        isAuth,
-        events,
-        months,
-        current,
-        password,
-        reboot,
-        setEdu,
-        setText,
-        setEdit,
-        setUser,
-        setTitle,
-        setAlert,
-        setUsers,
-        setEmail,
-        setToken,
-        setButton,
-        setEvents,
-        setCurrent,
-        setPassword,
-        isValidEmail,
-        handleSetIsAuth
-      }}>
+      <DefaultContext.Provider value={{ width, edu, user, edit, users, email, token, isAuth, events, months, current, password, reboot, setEdu, setText, setEdit, setUser, setTitle, setAlert, setUsers, setEmail, setToken, setButton, setEvents, setCurrent, setPassword, isValidEmail, handleSetIsAuth }}>
         <BrowserRouter>
           <div className={`alert ${alert ? "visible" : "unvisible"}`}>
             <div className='alertBox'>
@@ -141,6 +91,9 @@ function App() {
             <Route path='/fullform' element={<Fullform/>}/>
             <Route path='/verify' element={<Verificator/>}/>
             <Route path='/documents' element={<Document/>}/>
+            <Route path='/reportList' element={<ReportList/>}/>
+            <Route path='/createEvent' element={<CreateEvent/>}/>
+            <Route path='/changeStatus' element={<ChangeStatus/>}/>
           </Routes>
           <Footer/>
         </BrowserRouter>

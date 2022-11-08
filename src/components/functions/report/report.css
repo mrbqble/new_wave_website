@@ -1,7 +1,10 @@
 .eventinfo .inf input {
     margin: 0px;
-    width: 3.5vw;
-    text-align: center;
+    width: 2.3vw;
+}
+
+.report .eventinfo {
+    gap: 30px;
 }
 
 .data select {
@@ -28,6 +31,7 @@ table {
 
 .eventinfo .data {
     align-items: center;
+    justify-content: space-between;
 }
 
 @media (max-width: 400px) {

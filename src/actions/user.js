@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const link = `https://frozen-thicket-00434.herokuapp.com/api/auth`;
+const link = `http://localhost:1500/api/auth`;
 
 export const profile = async (email, token) => {
     const response = await axios.post(`${link}/profile`, {email, token});
@@ -18,7 +18,6 @@ export const login = async (email, password, handleSetIsAuth) => {
 };
 
 export const registration = async (item) => {
-    console.log(item);
     await axios.post(`${link}/registration`, {item});
 };
 
@@ -27,11 +26,10 @@ export const editProfile = async (item) => {
 };
 
 export const profilePhoto = async (email, file) => {
-    const response = await axios.post(`${link}/profilePhoto`, {email, file});
-    console.log(response.data);
+    await axios.post(`${link}/profilePhoto`, {email, file});
 }
 
-export const getPlaces = async (latitude, longtitude) => {
-    const response = await axios.post(`${link}/places`, {latitude, longtitude});
+export const getCertificate = async (firstName, secondName, city, code, year, email, country, volunteeringHours) => {
+    const response = await axios.post(`${link}/certificate`, {firstName, secondName, city, code, year, email, country, volunteeringHours});
     return response.data;
 }

@@ -1,11 +1,12 @@
 import './profile.css';
 import { useContext } from "react";
 import profile from "../../imgs/profile.png";
-import { certificate } from '../certificate';
+import { getCertificate } from '../../../actions/user';
 import { useNavigate } from 'react-router-dom';
 import { DefaultContext } from "../../../Context";
 import { profilePhoto } from '../../../actions/user';
 import Compressor from 'compressorjs';
+import { saveAs } from 'file-saver';
 
 export const Profile = () => {
 
@@ -19,7 +20,7 @@ export const Profile = () => {
 
     const handleCertificate = () => {
         if (user.volunteeringHours) {
-            certificate(
+            getCertificate(
                 user.firstName,
                 user.secondName,
                 user.city,
@@ -28,7 +29,10 @@ export const Profile = () => {
                 user.email,
                 user.country,
                 user.volunteeringHours
-            );
+            ).then((response) => {
+                const file = `data:application/pdf;base64,${response.doc}`
+                saveAs(file, `${response.code}.pdf`)
+            });
         } else {
             setTitle("Oops!");
             setText("You don't have enough volunteering hours to get a certificate. Earn more on our events!");
@@ -40,7 +44,7 @@ export const Profile = () => {
     const getBase64 = (file) => {
         var reader = new FileReader();
         new Compressor(file, {
-            quality: 0.8,
+            quality: 0.1,
             success: (res) => {      
                 reader.readAsDataURL(res);
                 reader.onload = function () {
@@ -57,66 +61,66 @@ export const Profile = () => {
             <div className='inf one'>
                 <div className='inf'>
                     <div className="data">
-                        <span>Full name: </span>
+                        <span><font>Full name:</font></span>
                         <span>{user?.firstName + ' ' + user?.secondName}</span>
                     </div>
                     <div className="data">
-                        <span>Date of birth:</span>
+                        <span><font>Date of birth:</font></span>
                         <span>{user?.dateOfBirth}</span>
                     </div>
                     <div className="data">
-                        <span>Gender:</span>
+                        <span><font>Gender:</font></span>
                         <span>{user?.gender}</span>
                     </div>
                     <div className="data">
-                        <span>Status:</span>
+                        <span><font>Status:</font></span>
                         <span>{user?.type}</span>
                     </div>
                     <div className="data">
-                        <span>Volounteering hours:</span>
+                        <span><font>Volounteering hours:</font></span>
                         <span>{user?.volunteeringHours}</span>
                     </div>
                     <div className="data">
-                        <span>Country:</span>
+                        <span><font>Country:</font></span>
                         <span>{user?.country}</span>
                     </div>
                     <div className="data">
-                        <span>City:</span>
+                        <span><font>City:</font></span>
                         <span>{user?.city}</span>
                     </div>
                     <div className="data">
-                        <span>Affiliation:</span>
+                        <span><font>Affiliation:</font></span>
                         <span>{user?.affiliation}</span>
                     </div>
                     {user.affiliation !== 'Work' && user.affiliation !== "Unemployed" && <>
                         <div className="data">
-                            <span>{user?.affiliation}:</span>
+                            <span><font>{user?.affiliation}:</font></span>
                             <span>{user?.school}</span>
                         </div>
                         <div className="data">
-                            <span>{user?.affiliation === "School" ? "Grade" : "Course"}:</span>
+                            <span><font>{user?.affiliation === "School" ? "Grade" : "Course"}:</font></span>
                             <span>{user?.grade}</span>
                         </div>
                     </>}
                     {user.affiliation === "University" && 
                         <div className="data">
-                            <span>Degree:</span>
+                            <span><font>Degree:</font></span>
                             <span>{user?.degree}</span>
                         </div>}
                     <div className="data">
-                        <span>E-mail:</span>
+                        <span><font>E-mail:</font></span>
                         <span>{user?.email}</span>
                     </div>
                     <div className="data">
-                        <span>Phone number:</span>
+                        <span><font>Phone number:</font></span>
                         <span>{user?.phoneNumber}</span>
                     </div>
                     <div className="data">
-                        <span>Instagram account:</span>
+                        <span><font>Instagram account:</font></span>
                         <span>{user?.instagram}</span>
                     </div>
                     <div className="data">
-                        <span>Telegram username:</span>
+                        <span><font>Telegram username:</font></span>
                         <span>{user?.telegram}</span>
                     </div>
                 </div>
@@ -157,8 +161,7 @@ export const Profile = () => {
                         >REPORT THE EVENT</a>
                         <a
                             className='btn'
-                            target='_blank'
-                            href='https://event-uploader.vercel.app/'
+                            onClick={() => navigate("/createEvent")}
                         >ADD AN EVENT</a></>
                         : <></>
                     }
