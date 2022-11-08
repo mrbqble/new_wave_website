@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const link = `http://localhost:1500/api/add`;
+const link = `https://frozen-thicket-00434.herokuapp.com/api/add`;
 
 export const getEvents = async () => {
     const response = await axios.post(`${link}/events`);
@@ -65,6 +65,6 @@ export const getPlaces = async (latitude, longtitude) => {
 }
 
 export const createEvent = async (item) => {
-    const response = await axios.post("http://localhost:1500/api/add/createEvent", {item});
+    const response = await axios.post(`${link}/createEvent`, {item});
     return response;
 }
