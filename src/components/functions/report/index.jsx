@@ -15,7 +15,7 @@ export const Report = () => {
     const [bags, setBags] = useState(0);
     const [filteredEvents, setFilteredEvents] = useState(events);
     const [distance, setDistance] = useState(0);
-    const [addInfo, setAddInfo] = useState('');
+    const [addInfo, setAddInfo] = useState(''); 
     const types = ["Cleaning day", "Tree planting", "Shelter visiting"];
 
     const [search, setSearch] = useState('');
