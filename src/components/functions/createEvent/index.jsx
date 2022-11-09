@@ -1,23 +1,25 @@
 import React from 'react';
 import { useState } from "react";
-import Compressor from 'compressorjs';
-import { Input } from "../../auth/fullform/Input";
-import { createEvent } from '../../../actions/add';
-import { Select } from "../../auth/fullform/Select";
-import { useContext } from "react";
-import { DefaultContext } from "../../../Context";
 import { useEffect } from 'react';
+import { useContext } from "react";
+import Compressor from 'compressorjs';
+import { DefaultContext } from "../../../Context";
+import { Input } from "../../auth/fullform/Input";
+import { getCoordinators } from '../../../actions/user';
+import { createEvent } from '../../../actions/event';
+import { Select } from "../../auth/fullform/Select";
 
 const formats = ["Offline", "Online"];
 const types = ["Cleaning day", "Tree planting", "Shelter visiting"];
 
 export const CreateEvent = () => {
     
-    const [partner, setPartner] = useState("");
-    const { edu, users} = useContext(DefaultContext);
-    const [organizator, setOrganizator] = useState(users);
     const [hours, setHours] = useState(0);
+    const [search, setSearch] = useState('');
     const [minutes, setMinutes] = useState(0);
+    const [partner, setPartner] = useState("");
+    const { edu } = useContext(DefaultContext);
+    const [organizator, setOrganizator] = useState();
     const [item, setItem] = useState({
         title: "",
         text: "",
@@ -55,6 +57,10 @@ export const CreateEvent = () => {
     }
 
     useEffect(() => {
+        getCoordinators().then((response) => setOrganizator(response))
+    }, [])
+
+    useEffect(() => {
         var h = parseInt(item.endTime.split(":")[0]) - parseInt(item.startTime.split(":")[0]);
         var m = parseInt(item.endTime.split(":")[1]) - parseInt(item.startTime.split(":")[1]);
         if (m < 0) {
@@ -68,7 +74,6 @@ export const CreateEvent = () => {
 
     return (
         <div className="reg block">
-            <pre>{JSON.stringify(item, null, "\t")}</pre>
             <Input
                 title="Title"
                 value={item.title}
@@ -181,8 +186,14 @@ export const CreateEvent = () => {
             </div>
             <div className='field'>
                 <p>Organizators:</p>
+                <input
+                    type="text"
+                    className="search"
+                    placeholder="Search for the organizator"
+                    onChange={(event) => setSearch(event.target.value)}
+                />
                 <div className="eventinfo">
-                    {organizator?.filter(user => user.type === "Coordinator")?.map((user, index) => 
+                    {organizator?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase())?.map((user, index) => 
                         <div className="data" key={index}>
                             <p>{user.firstName + " " + user.secondName}</p>
                             <a className='btn' onClick={() => {
@@ -193,7 +204,7 @@ export const CreateEvent = () => {
                     )}
                 </div>
                 <div className="eventinfo">
-                    {item.organizators?.map((thing, index) => 
+                    {item.organizators?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase())?.map((thing, index) => 
                         <div className='data' key={index}>
                             <p>{thing.firstName + " " + thing.secondName}</p>
                             <a className='btn' onClick={() => {

@@ -6,17 +6,14 @@ import { EffectCreative } from "swiper";
 import { SwiperButtonNext } from './next';
 import { SwiperButtonPrev } from './prev';
 import bluearr from "../../imgs/bluearr.png";
-import { getEvents } from '../../../actions/add';
 import { DefaultContext } from "../../../Context";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { attend, leave } from "../../../actions/add";
+import { getEvents, attend, leave } from "../../../actions/event";
 
 export const Event = () => {
 
     let date;
-    const year = new Date();
     const [isAttended, setIsAttended] = useState(false);
-    const [availableEvents, setAvailableEvents] = useState();
     const {user, setEvents, events, current, setCurrent, months, setAlert, setTitle, setText, setButton} = useContext(DefaultContext);
 
     const handleAttend = () => {
@@ -49,13 +46,6 @@ export const Event = () => {
         setCurrent(slide.activeIndex ? (slide.activeIndex - 1) % events.length : events.length - 1);
     }
 
-    useEffect(() => {
-        setAvailableEvents(events?.filter(item => {
-            date = item.date.split("-")
-            return year.getFullYear() <= date[0] && (year.getMonth() + 1) <= date[1] && year.getDate() <= date[2];
-        }))
-    }, [events])
-
     return (
         <div className="reg">
             <Swiper
@@ -78,11 +68,11 @@ export const Event = () => {
                     zIndex: "1"
                 }}
             >
-                {availableEvents
-                    ? availableEvents.map((item, index) => 
+                {events?.length
+                    ? events.map((item, index) => 
                     <>{date = item.date.split('-')}
                     <SwiperSlide style={{backgroundColor: "white"}} key={index}>
-                        <div className="container event block" style={{justifyContent: "space-between", marginLeft: "0px", padding: "50px 0px"}}>
+                        <div className="container event block" style={{justifyContent: "space-between", alignItems: "normal", marginLeft: "0px", padding: "50px 0px"}}>
                             <div style={{height: "90vh"}} className="inf">
                                 <SwiperButtonPrev index={index ? (index - 1) % events.length : events.length - 1}>
                                     <img
@@ -96,17 +86,17 @@ export const Event = () => {
                             </div>
                             <div className="eventinfo" style={{gap: "40px"}}>
                                 <h1>
-                                    {item.title}<br/>
-                                    <font>{item.subtitle}</font>
+                                    <font>{item.title.split(' ')[0]}</font><br/>
+                                    {item.title.slice(item.title.split(' ')[0].length)}
                                 </h1>
                                 <div>
-                                    <p className='text'>{item.text}</p>
-                                    <p>{item.subtext}</p>
+                                    <p className='text'>{item.text.split('\n')[0]}</p>
+                                    <p>{item.text.split('\n')[1]}</p>
                                 </div>
                                 <div>
                                     <p className="text">City: <font>{item.city}</font></p>
                                     <p className="text">Date: <font>{months[parseInt(date[1]) - 1] + " " + date[2] + ", " + date[0]}</font></p>
-                                    <p className="text" style={{marginBottom: "0px"}}>Volunteering hours: <font>{item.hours}</font></p>
+                                    <p className="text" style={{marginBottom: "0px"}}>Volunteering hours: <font>{item.duration.split(".")[0]}</font></p>
                                 </div>
                                 <div>
                                     <p className="text">Volunteers needed: <font>{item.places}</font></p>

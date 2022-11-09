@@ -11,7 +11,7 @@ import { DefaultContext } from "../../../Context";
 import { editProfile } from '../../../actions/user';
 import countryList from 'react-select-country-list';
 import { profile, registration } from '../../../actions/user';
-import { addEducation, addUniversity, getEducation, getUsers } from '../../../actions/add';
+import { addEducation, addUniversity, getEducation } from '../../../actions/add';
 
 const courses = [1, 2, 3, 4];
 const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -21,7 +21,7 @@ const affiliations = ["School", "Work", "College", "University", "Unemployed"];
 export const Fullform = () => {
     
     const navigate = useNavigate();
-    const { edu, edit, user, email, users, width, password, setEdu, setEdit, setUser, setText, setEmail, setUsers, setTitle, setAlert, setButton, setPassword } = useContext(DefaultContext);
+    const { edu, edit, user, email, width, password, setEdu, setEdit, setUser, setText, setEmail, setTitle, setAlert, setButton, setPassword } = useContext(DefaultContext);
     const [cities, setCities] = useState()
     const [schools, setSchools] = useState()
     const [colleges, setColleges] = useState()
@@ -88,16 +88,11 @@ export const Fullform = () => {
         setItem({...item, phoneNumber: item.phoneNumber[0] === "+" ? item.phoneNumber : "+" + item.phoneNumber})
         if (item.firstName && item.secondName && item.phoneNumber.length >= 11 && item.telegram.length !== 1 && item.instagram.length !== 1 && item.school && item.city) {
             if(edit) {
-                if (!users?.find(item => item.email === email && user.email !== item.email)) {
-                    editProfile(item).then((res) => {
-                        profile(email).then(response => setUser(response));
-                        getUsers().then(response => setUsers(response));
-                        setEdit(false);
-                        navigate('/profile')
-                    })
-                } else {
-                    alert(`User with email ${email} already exists!`)
-                }
+                editProfile(item).then((res) => {
+                    profile(email).then(response => setUser(response));
+                    setEdit(false);
+                    navigate('/profile')
+                }).catch((error) => console.log(error))
             } else {
                 if (!universities?.filter(university => university.name === item.school).length && item.affiliation === "University") {
                     addUniversity(item.school).then((res) => getEducation().then((response) => setEdu(response)))
@@ -109,7 +104,6 @@ export const Fullform = () => {
                     item.affiliation === "College" ? item.school : ""
                 ).then((res) => getEducation().then((response) => setEdu(response)))
                 registration(item).then((res) => {
-                    getUsers().then((response) => setUsers(response));
                     setEmail('');
                     setPassword('');
                     setButton("Hurrah!");

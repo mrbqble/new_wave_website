@@ -18,6 +18,7 @@ export const Input = ({type="text", title, placeholder, value, onChange, minLeng
                 onKeyDown={(event) => {
                     if (/[а-яё]/i.test(event.key)) {
                         setMessage(defaultMessage)
+                        event.preventDefault();
                     }
                 }}
                 onBlur={() => setMessage(value ? "" : "Mandatory field!")}

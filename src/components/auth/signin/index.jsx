@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DefaultContext } from "../../../Context";
 import { login, profile } from "../../../actions/user";
+import { checkEmail } from '../../../actions/user';
 
 export const Signin = () => {
 
@@ -11,11 +12,13 @@ export const Signin = () => {
   const [show, setShow] = useState(false);
   const [message, setMessage] = useState("");
   const [pmessage, setPmessage] = useState("");
-  const { user, users, email, token, reboot, setUser, password, setEmail, setPassword, isValidEmail, handleSetIsAuth } = useContext(DefaultContext);
+  const [check, setCheck] = useState('')
+  const { user, email, token, reboot, setUser, password, setEmail, setPassword, isValidEmail, handleSetIsAuth } = useContext(DefaultContext);
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     setPmessage(password ? "" : "Enter your password!");
-    if (isValidEmail() && users?.find(item => item.email === email)) {
+    await checkEmail(email).then(res => setCheck(res));
+    if (isValidEmail() && check) {
       login(
         email,
         password,
@@ -46,13 +49,15 @@ export const Signin = () => {
               value={email}
               maxLength={320}
               placeholder="example@mail.com"
-              onBlur={() => setMessage(email
+              onBlur={async () => {
+                await checkEmail(email).then(res => setCheck(res));
+                setMessage(email
                   ? isValidEmail()
-                    ? users?.find(item => item.email === email)
+                    ? check
                       ? ""
                       : "User not found."
                     : "Enter a valid email, please!"
-                  : "Enter your email!")}
+                  : "Enter your email!")}}
               onChange={(event) => setEmail(event.target.value.replace(/[^a-zA-Z0-9@._\s]/g, ""))}
               onKeyDown={(event) => {
                 if (/[а-яё]+/i.test(event.key)) {

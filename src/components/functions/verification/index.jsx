@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { check } from "../../../actions/add";
 import "./verification.css";
+import { useState } from "react";
 import { useContext } from "react";
+import { check } from "../../../actions/user";
 import { DefaultContext } from "../../../Context";
 
 export const Verificator = () => {
 
-    const [code, setCode] = useState('');
     const [data, setData] = useState();
-    const [year, setYear] = useState('');
+    const [code, setCode] = useState();
+    const [year, setYear] = useState();
+    const [message, setMessage] = useState();
     const {width} = useContext(DefaultContext);
-    const [message, setMessage] = useState("")
 
     const handleCheck = () => {
         if (code) {
