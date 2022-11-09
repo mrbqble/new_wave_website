@@ -1,20 +1,20 @@
 import './registration.css';
-import { useState } from 'react';
-import { useContext } from "react";
-import {useNavigate} from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DefaultContext } from "../../../Context";
 import showp from '../../imgs/show.png';
 import hide from '../../imgs/hide.png';
-import { useEffect } from 'react';
+import { checkEmail } from '../../../actions/user';
 
 export const Registration = () => {
     
-    const { password, setEmail, setPassword, users, email, isValidEmail } = useContext(DefaultContext);
+    const { password, setEmail, setPassword, email, isValidEmail } = useContext(DefaultContext);
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [valid, setValid] = useState(false);
     const [message, setMessage] = useState("");
     const [pmessage, setPmessage] = useState("");
+    const [check, setCheck] = useState();
 
     function doesContainNumber() {
         return /(?=.*[0-9])/.test(password);
@@ -44,9 +44,14 @@ export const Registration = () => {
             && checkLength(password);
     }
 
-    const handleOnClick = () => {
-        if (isValidEmail() && checkPassword() && !users?.find(item => item.email === email)) {
-            navigate('/fullform');
+    const handleOnClick = async () => {
+        await checkEmail(email).then(res => setCheck(res));
+        if (check === false) {
+            if (isValidEmail() && checkPassword()) {
+                navigate('/fullform');
+            }
+        } else {
+            setMessage("This email is already taken!")
         }
     };
 
@@ -67,13 +72,15 @@ export const Registration = () => {
                             type="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value.replace(/[^a-zA-Z0-9@._\s]/g, ""))}
-                            onBlur={() => setMessage(email
+                            onBlur={async () => {
+                                await checkEmail(email).then(res => setCheck(res));
+                                setMessage(email
                                 ? isValidEmail()
-                                    ? users?.find(item => item.email === email)
+                                    ? check
                                         ? `This email is already taken!`
                                         : ""
                                     : "Enter a valid email, please!"
-                                : "Enter your email!")}
+                                : "Enter your email!")}}
                             placeholder='example@mail.com'
                             onKeyDown={(event) => {
                                 if (/[а-яё]/i.test(event.key)) {

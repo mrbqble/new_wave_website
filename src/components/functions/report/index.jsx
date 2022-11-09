@@ -2,14 +2,13 @@ import "./report.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { report } from "../../../actions/add";
-import { getUsers } from '../../../actions/add';
-import { profile } from '../../../actions/user';
+import { getUsers, profile } from '../../../actions/user';
 import { DefaultContext } from "../../../Context";
+import { report } from "../../../actions/add";
 
 export const Report = () => {
 
-    const {events, users, email, setUser, setUsers, token} = useContext(DefaultContext);
+    const {events, email, setUser, token, user} = useContext(DefaultContext);
     const [type, setType] = useState('Cleaning day');
     const [eventid, setEventId] = useState(0);
     const [bags, setBags] = useState(0);
@@ -17,6 +16,7 @@ export const Report = () => {
     const [distance, setDistance] = useState(0);
     const [addInfo, setAddInfo] = useState(''); 
     const types = ["Cleaning day", "Tree planting", "Shelter visiting"];
+    const [users, setUsers] = useState();
 
     const [search, setSearch] = useState('');
 
@@ -26,9 +26,13 @@ export const Report = () => {
 
     useEffect(() => {
         setUsers(filteredEvents 
-            ? [...filteredEvents[eventid].attended.sort((a, b) => a.name.localeCompare(b.name)), ...users.filter(item => !filteredEvents[eventid].attended.find(att => att.email === item.email))] 
+            ? [...filteredEvents[eventid]?.attended?.sort((a, b) => a.name.localeCompare(b.name)), ...users?.filter(item => !filteredEvents[eventid]?.attended?.find(att => att.email === item.email))] 
             : users)
     }, [eventid])
+
+    useEffect(() => {
+        getUsers().then(res => setUsers(res))
+    }, [])
 
     const handleItemCame = (email) => {
         let newUsers = JSON.parse(JSON.stringify(users))
@@ -58,11 +62,11 @@ export const Report = () => {
                     <div className="inf" style={{alignItems: "normal", justifyContent: "left"}}>
                         <div className="data">    
                             <span>№:</span>
-                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid].number : "" : ""}</span>
+                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.number : "" : ""}</span>
                         </div>
                         <div className="data">
                             <span>Coordinator:</span>
-                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid].coordinator : "" : ""}</span>
+                            <span>{user ? user?.firstName + " " + user?.secondName : ""}</span>
                         </div>
                         <div className="data">
                             <span>Type:</span>

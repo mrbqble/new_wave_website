@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { status } from "../../../actions/add";
+import { getUsers, status } from "../../../actions/user";
 import { DefaultContext } from "../../../Context";
 
 export const ChangeStatus = () => {
 
-    const { users, setUsers } = useContext(DefaultContext);
+    const [users, setUsers] = useState();
     const [search, setSearch] = useState('');
     const arraySF = users?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase());
     const statuses = ["Volunteer", "Coordinator", "Administrator"];
@@ -30,6 +30,10 @@ export const ChangeStatus = () => {
     const handleSave = () => {
         status(changedUsers).then((response) => console.log(response))
     }
+
+    useEffect(() => {
+        getUsers().then(response => setUsers(response))
+    }, [])
 
     return (
         <div className="reg block">

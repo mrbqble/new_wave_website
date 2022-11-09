@@ -43,11 +43,7 @@ export const Footer = () => {
             {
                 title: 'Join the evergreen!',
                 href: '/'
-            },
-            {
-                title: 'Map',
-                href: '/map'
-            },
+            }
         ],
         [
             {
@@ -64,11 +60,7 @@ export const Footer = () => {
             {
                 title: 'Become a volunteer',
                 href: '/reg'
-            },
-            {
-                title: 'Rating of volunteers',
-                href: '/rating'
-            },
+            }
         ],
     ];
 
@@ -122,7 +114,7 @@ export const Footer = () => {
                                 alt="instagram icon"
                         /></a>
                         <a
-                            href="https://youtube.com" 
+                            href="https://youtube.com"
                             target="_blank"
                         >
                             <img

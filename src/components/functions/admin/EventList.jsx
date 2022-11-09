@@ -3,20 +3,16 @@ import { getReports } from '../../../actions/add';
 import { DefaultContext } from "../../../Context";
 import React, { useEffect, useState } from 'react';
 
-export const ReportList = () => {
+export const EventList = () => {
 
     const [reports, setReports] = useState();
     const [search, setSearch] = useState('');
     const { events } = useContext(DefaultContext);
     const arraySF = reports;
 
-    useEffect(() => {
-        getReports().then((response) => setReports(response));
-    }, [])
-
     return (
         <div className='reg block'>
-            <h1>List of reports</h1>
+            <h1>List of events</h1>
             <div className="eventinfo">
                 <input
                     type="text"

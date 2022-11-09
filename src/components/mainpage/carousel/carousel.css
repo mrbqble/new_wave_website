@@ -17,6 +17,7 @@
 .container {
     display: flex;
     margin-left: 12.1vw;
+    align-items: center;
 }
 
 .text {

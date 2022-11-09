@@ -16,22 +16,13 @@ import { useEffect } from 'react';
 export const Carousel = () => {
 
     let date;
-    const year = new Date();
     const navigate = useNavigate();
     const {events, setCurrent, width, months} = useContext(DefaultContext);
-    const [availableEvents, setAvailableEvents] = useState();
 
     const handleMoreEvent = (index) => {
         setCurrent(index)
         navigate('/event');
     };
-
-    useEffect(() => {
-        setAvailableEvents(events?.filter(item => {
-            date = item.date.split("-")
-            return year.getFullYear() <= date[0] && (year.getMonth() + 1) <= date[1] && year.getDate() <= date[2];
-        }))
-    }, [events])
 
     return (
         <Swiper
@@ -57,8 +48,8 @@ export const Carousel = () => {
                 zIndex: "1"
             }}
         >
-            {availableEvents
-                ? availableEvents.map((item, index) =>
+            {events?.length
+                ? events.map((item, index) =>
                     <>{date = item.date.split('-')}
                         <SwiperSlide key={index}
                             style={{backgroundColor: "white"}}
@@ -68,18 +59,18 @@ export const Carousel = () => {
                                     <h1 style={{
                                         textAlign: 'left'
                                     }}>
-                                        {item.title}<br/>
-                                        <font>{item.subtitle}</font>
+                                        <font>{item.title.split(" ")[0]}</font><br/>
+                                        {item.title.slice(item.title.split(" ")[0].length)}
                                     </h1>
                                     <div style={{
                                         marginLeft: width > 400 ? '5vw' : ""
                                     }}>
-                                        <p className='text'>{item.text}</p>
+                                        <p className='text'>{item.text.split('\n')[0]}</p>
                                         <p style={{
                                             marginBottom: "4vh"
                                         }}
-                                        >{item.subtext}</p>
-                                        <h2 style={{marginBottom: "0px"}}>{months[parseInt(date[1]) - 1] + " " + date[2] + ", " + date[0]}</h2>
+                                        >{item.text.split('\n')[1]}</p>
+                                        <h2 style={{marginBottom: "0px"}}>{date[2] + " " + months[parseInt(date[1]) - 1] + " " + date[0]}</h2>
                                     </div>
                                     <a
                                         className='link'
