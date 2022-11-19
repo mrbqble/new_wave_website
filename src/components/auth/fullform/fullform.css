@@ -43,6 +43,9 @@ select {
     background-repeat: no-repeat;
 }
 
+/* Styles for upload image input */
+
+
 input {
     width: 400px;
     font-size: 18px;
