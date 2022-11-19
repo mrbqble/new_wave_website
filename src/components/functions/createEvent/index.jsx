@@ -1,13 +1,11 @@
-import React from 'react';
-import { useState } from "react";
-import { useEffect } from 'react';
-import { useContext } from "react";
+import "./createEvent.css";
 import Compressor from 'compressorjs';
 import { DefaultContext } from "../../../Context";
 import { Input } from "../../auth/fullform/Input";
-import { getCoordinators } from '../../../actions/user';
-import { createEvent } from '../../../actions/event';
 import { Select } from "../../auth/fullform/Select";
+import { createEvent } from '../../../actions/event';
+import { getCoordinators } from '../../../actions/user';
+import React, { useState, useEffect, useContext } from "react";
 
 const formats = ["Offline", "Online"];
 const types = ["Cleaning day", "Tree planting", "Shelter visiting"];
@@ -38,6 +36,8 @@ export const CreateEvent = () => {
         partners: [],
         organizators: []
     });
+
+    const arraySF = organizator?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase());
 
     const handleNumbers = (value) => {
         return value ? parseInt(value.replace(/[^0-9\s]/g, "")) : 0;
@@ -73,149 +73,182 @@ export const CreateEvent = () => {
     }, [item.startTime, item.endTime])
 
     return (
-        <div className="reg block">
-            <Input
-                title="Title"
-                value={item.title}
-                placeholder="Enter the title"
-                onChange={(e) => setItem({ ...item, title: e.target.value })}
-            />
-            <div className="field">
-                <p>Text:</p>
-                <textarea
-                    rows={10}
-                    value={item.text}
-                    placeholder="Enter the text"
-                    onChange={(e) => setItem({ ...item, text: e.target.value })}
-                />
-            </div>
-            <div className="field">
-                <Input
-                    title="Image"
-                    type="file"
-                    onChange={(e) => getBase64(e.target.files[0])}
-                />
-                <div className='frame'>
-                    <img src={item?.image} alt="Event image"/>
-                </div>
-            </div>
-            <Select
-                title="Type"
-                value={item.type}
-                onChange={(e) => setItem({...item, type: e.target.value})}
-                options={types}
-            />
-            <Select
-                title="Format"
-                value={item.format}
-                onChange={(e) => setItem({...item, format: e.target.value})}
-                options={formats}
-            />
-            <Select
-                title="City"
-                value={item.city}
-                onChange={(e) => setItem({...item, city: e.target.value})}
-                options={edu.countries ? edu?.countries[0]?.cities?.map((item) => {return item.name}) : []}
-            />
-            <Input
-                title="Location"
-                value={item.location}
-                placeholder="Enter the location"
-                onChange={(e) => setItem({ ...item, location: e.target.value })}
-            />
-            <Input
-                title="Link"
-                value={item.mapLink}
-                placeholder="Enter the link of map for location"
-                onChange={(e) => setItem({ ...item, mapLink: e.target.value })}
-            />
-            <Input
-                title="Volunteers needed"
-                value={item.places}
-                onChange={(e) => setItem({ ...item, places: handleNumbers(e.target.value) })}
-            />
-            <Input
-                title="Date"
-                type="date"
-                value={item.date}
-                onChange={(e) => setItem({ ...item, date: e.target.value })}
-            />
-            <div className='field'>
-                <Input
-                    title="Time to start"
-                    type="time"
-                    value={item.startTime}
-                    onChange={(e) => setItem({ ...item, startTime: e.target.value })}
-                />
-                <Input
-                    title="Time to end"
-                    type="time"
-                    value={item.endTime}
-                    onChange={(e) => setItem({ ...item, endTime: e.target.value })}
-                />
-                {item.startTime && item.endTime && <p>Duration: {hours} hours {minutes} minutes</p>}
-            </div>
-            <div className="field">
-                <p>Additional information:</p>
-                <textarea
-                    rows={10}
-                    value={item.addInfo}
-                    placeholder="Enter additional information"
-                    onChange={(e) => setItem({ ...item, addInfo: e.target.value })}
-                />
-            </div>
-            <div className='field'>
-                <Input
-                    title="Partners"
-                    value={partner}
-                    placeholder="Enter the partner name"
-                    onChange={(e) => setPartner(e.target.value)}
-                />
-                <a className='cert btn' onClick={() => {
-                    setItem({...item, partners: [...item.partners, partner]})
-                    setPartner("")
-                }}>Add partner</a>
-                <div className='eventinfo'>
-                    {item.partners?.map((thing, index) => 
-                        <div className='data' key={index}>
-                            <p>{thing}</p>
-                            <a className='btn' onClick={() => setItem({...item, partners: item.partners.filter(part => part !== item.partners[index])})}>delete</a>
+        <div className="full reg block">
+            <h1>Make an event</h1>
+            <form action="post">
+                <div className="form">
+                    <Input
+                        title="Title:"
+                        value={item.title}
+                        placeholder="Enter the title"
+                        onChange={(e) => setItem({ ...item, title: e.target.value })}
+                    />
+                    <div className="field">
+                        <Input
+                            title="Image:"
+                            type="file"
+                            onChange={(e) => getBase64(e.target.files[0])}
+                        />
+                        <div className='frame'>
+                            {item.image && <img src={item?.image} alt="Event image"/>}
                         </div>
-                    )}
+                    </div>
+                    <div className="field">
+                        <p>Text: <font className="warn">*</font></p>
+                        <textarea
+                            rows={10}
+                            value={item.text}
+                            placeholder="Enter the text"
+                            onChange={(e) => setItem({ ...item, text: e.target.value })}
+                        />
+                    </div>
+                    <div className="field">
+                        <p>Additional information:</p>
+                        <textarea
+                            rows={10}
+                            value={item.addInfo}
+                            placeholder="Enter additional information"
+                            onChange={(e) => setItem({ ...item, addInfo: e.target.value })}
+                        />
+                    </div>
+                    <Select
+                        title="Type:"
+                        value={item.type}
+                        onChange={(e) => setItem({...item, type: e.target.value})}
+                        options={types}
+                    />
+                    <Select
+                        title="Format:"
+                        value={item.format}
+                        onChange={(e) => setItem({...item, format: e.target.value})}
+                        options={formats}
+                    />
+                    <Select
+                        title="City:"
+                        value={item.city}
+                        onChange={(e) => setItem({...item, city: e.target.value})}
+                        options={edu.countries ? edu?.countries[0]?.cities?.map((item) => {return item.name}) : []}
+                    />
+                    <Input
+                        title="Location:"
+                        value={item.location}
+                        placeholder="Enter the location"
+                        onChange={(e) => setItem({ ...item, location: e.target.value })}
+                    />
+                    <Input
+                        title="Link:"
+                        value={item.mapLink}
+                        placeholder="Enter link for map"
+                        onChange={(e) => setItem({ ...item, mapLink: e.target.value })}
+                    />
+                    <Input
+                        title="Volunteers needed:"
+                        value={item.places}
+                        onChange={(e) => setItem({ ...item, places: handleNumbers(e.target.value) })}
+                    />
+                    <Input
+                        title="Date:"
+                        type="date"
+                        value={item.date}
+                        onChange={(e) => setItem({ ...item, date: e.target.value })}
+                    />
+                    <Input
+                        title="Time to start:"
+                        type="time"
+                        value={item.startTime}
+                        onChange={(e) => setItem({ ...item, startTime: e.target.value })}
+                    />
+                    <Input
+                        title="Time to end:"
+                        type="time"
+                        value={item.endTime}
+                        onChange={(e) => setItem({ ...item, endTime: e.target.value })}
+                    />
+                    <div className="field">
+                        <p>Duration:</p>
+                        <p className="duration">{hours ? hours : 0} hours {minutes ? minutes : 0} minutes</p>
+                    </div>
+                    <div className='field'>
+                        <Input
+                            title="Partners:"
+                            value={partner}
+                            placeholder="Enter the partner name"
+                            onChange={(e) => setPartner(e.target.value)}
+                        />
+                        <a
+                            className='cert btn'
+                            onClick={() => {
+                                setItem({...item, partners: [...item.partners, partner]})
+                                setPartner("")
+                            }}
+                        >Add partner</a>
+                        {item.partners.length
+                            ? <table>
+                                {item.partners?.map((thing, index) => 
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{thing.length > 15 ? thing.slice(0, 15) + "..." : thing}</td>
+                                        <td>
+                                            <a
+                                                className='btn'
+                                                onClick={() => setItem({...item, partners: item.partners.filter(part => part !== item.partners[index])})}
+                                            >delete</a>
+                                        </td>
+                                    </tr>)}
+                            </table>
+                            : <span style={{marginTop: "15px"}}>No partners</span>
+                        }
+                    </div>
+                    <div className='field'>
+                        <p>Organizators: <font className="warn">*</font></p>
+                        {item.organizators.length
+                            ? <table>
+                                {item.organizators?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase())?.map((thing, index) => 
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{thing.firstName + " " + thing.secondName}</td>
+                                        <td>
+                                            <a
+                                                className='btn'
+                                                onClick={() => {
+                                                    setItem({...item, organizators: item.organizators.filter(part => part.email !== item.organizators[index].email)})
+                                                    setOrganizator([...organizator, thing])
+                                                }}
+                                            >delete</a>
+                                        </td>
+                                    </tr>)}
+                            </table>
+                            : <span style={{marginTop: "15px"}}>No organizators</span>
+                        }
+                        <input
+                            className="search"
+                            value={search}
+                            placeholder="Search for the coordinator"
+                            onChange={(event) => setSearch(event.target.value)}
+                        />
+                        {arraySF?.length
+                            ? <table>
+                                {arraySF?.map((user, index) => 
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{(user.firstName + " " + user.secondName).slice(0, 15)}</td>
+                                        <td>
+                                            <a
+                                                className='btn'
+                                                onClick={() => {
+                                                    setItem({...item, organizators: [...item.organizators, user]})
+                                                    setOrganizator(organizator.filter(item => item.email !== organizator[index].email))
+                                                }}
+                                            >add</a>
+                                        </td>
+                                    </tr>)}
+                            </table>
+                            : <span style={{marginTop: "10px"}}>No coordinators</span>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div className='field'>
-                <p>Organizators:</p>
-                <input
-                    type="text"
-                    className="search"
-                    placeholder="Search for the organizator"
-                    onChange={(event) => setSearch(event.target.value)}
-                />
-                <div className="eventinfo">
-                    {organizator?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase())?.map((user, index) => 
-                        <div className="data" key={index}>
-                            <p>{user.firstName + " " + user.secondName}</p>
-                            <a className='btn' onClick={() => {
-                                setItem({...item, organizators: [...item.organizators, user]})
-                                setOrganizator(organizator.filter(item => item.email !== organizator[index].email))
-                            }}>Add as organizator</a>
-                        </div>
-                    )}
-                </div>
-                <div className="eventinfo">
-                    {item.organizators?.filter(item => (item.firstName + "" + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase())?.map((thing, index) => 
-                        <div className='data' key={index}>
-                            <p>{thing.firstName + " " + thing.secondName}</p>
-                            <a className='btn' onClick={() => {
-                                setItem({...item, organizators: item.organizators.filter(part => part.email !== item.organizators[index].email)})
-                                setOrganizator([...organizator, thing])
-                            }}>delete</a>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <a className="cert btn" onClick={() => createEvent(item)}>Submit</a>
+                <a className="cert btn" onClick={() => createEvent(item)}>Submit</a>
+            </form>
         </div>
     );
 }

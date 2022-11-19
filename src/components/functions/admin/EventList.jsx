@@ -5,10 +5,9 @@ import React, { useEffect, useState } from 'react';
 
 export const EventList = () => {
 
-    const [reports, setReports] = useState();
     const [search, setSearch] = useState('');
     const { events } = useContext(DefaultContext);
-    const arraySF = reports;
+    const arraySF = events;
 
     return (
         <div className='reg block'>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const link1 = `https://frozen-thicket-00434.herokuapp.com/api/user`;
-const link = `http://localhost:1500/api/user`;
+const link = `https://frozen-thicket-00434.herokuapp.com/api/user`;
+const link1 = `http://localhost:1500/api/user`;
 
 export const profile = async (email, token) => {
     const response = await axios.post(`${link}/profile`, {email, token});

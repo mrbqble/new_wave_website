@@ -122,7 +122,7 @@ export const Fullform = () => {
     };
 
     return (
-        <div className="full reg">
+        <div className="full reg block">
             <h1>Fill the form below</h1>
             <p style={{
                 textAlign: 'center',

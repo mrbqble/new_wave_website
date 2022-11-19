@@ -17,7 +17,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { getEducation } from './actions/add';
 import { getEvents } from './actions/event';
 import { Verificator } from './components/functions/verification';
-import { ReportList } from './components/functions/admin/ReportList';
 import { Document } from './components/functions/documents';
 import { ChangeStatus } from './components/functions/admin/ChangeStatus';
 import { EventList } from "./components/functions/admin/EventList";
@@ -88,7 +87,6 @@ function App() {
             <Route path='/verify' element={<Verificator/>}/>
             <Route path='/documents' element={<Document/>}/>
             <Route path='/eventList' element={<EventList/>}/>
-            <Route path='/reportList' element={<ReportList/>}/>
             <Route path='/createEvent' element={<CreateEvent/>}/>
             <Route path='/changeStatus' element={<ChangeStatus/>}/>
           </Routes>

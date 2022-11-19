@@ -26,7 +26,7 @@ export const Report = () => {
 
     useEffect(() => {
         setUsers(filteredEvents 
-            ? [...filteredEvents[eventid]?.attended?.sort((a, b) => a.name.localeCompare(b.name)), ...users?.filter(item => !filteredEvents[eventid]?.attended?.find(att => att.email === item.email))] 
+            ? [...filteredEvents[eventid]?.attended?.sort((a, b) => a.name.localeCompare(b.name)), users?.filter(item => !filteredEvents[eventid]?.attended?.find(att => att.email === item.email))] 
             : users)
     }, [eventid])
 
@@ -52,100 +52,102 @@ export const Report = () => {
         return value ? parseInt(value.replace(/[^0-9\s]/g, "")) : 0;
     }
 
-    const arraySF = users?.filter(item => (item.firstName + " " + item.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase());
+    const arraySF = users?.filter(item => (item?.firstName + " " + item?.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase());
 
     return (
-        <div className="reg block">
+        <div className="full reg block">
             <h1>Report of the event</h1>
-            <div className="data report" style={{alignItems: "normal", justifyContent: "space-evenly"}}>
-                <div className="eventinfo">
-                    <div className="inf" style={{alignItems: "normal", justifyContent: "left"}}>
-                        <div className="data">    
-                            <span>№:</span>
-                            <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.number : "" : ""}</span>
-                        </div>
-                        <div className="data">
-                            <span>Coordinator:</span>
-                            <span>{user ? user?.firstName + " " + user?.secondName : ""}</span>
-                        </div>
-                        <div className="data">
-                            <span>Type:</span>
-                            <select
-                                onChange={(event) => setType(event.target.value)}
-                            >
-                                {types.map((item, index) =>
-                                    <option
-                                        key={index}
-                                        value={item}
-                                    >{item}</option>
-                                )}
-                            </select>
-                        </div>
-                        <div className="data">
-                            <span>Location:</span>
-                            <select
-                                onChange={(event) => {
-                                    setEventId(event.target.value);
-                                }}
-                            >
-                                {filteredEvents 
-                                    ? filteredEvents.map((item, index) => 
+            <form action="">
+                <div className="data report" style={{alignItems: "normal", justifyContent: "space-evenly"}}>
+                    <div className="eventinfo">
+                        <div className="inf" style={{alignItems: "normal", justifyContent: "left"}}>
+                            <div className="data">    
+                                <span>№:</span>
+                                <span>{filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.number : "" : ""}</span>
+                            </div>
+                            <div className="data">
+                                <span>Coordinator:</span>
+                                {user && <span>{user?.firstName + " " + user?.secondName}</span>}
+                            </div>
+                            <div className="data">
+                                <span>Type:</span>
+                                <select
+                                    onChange={(event) => setType(event.target.value)}
+                                >
+                                    {types.map((item, index) =>
                                         <option
                                             key={index}
-                                            value={index}
-                                        >{item.location}</option>)
-                                    : <></>}
-                            </select>
-                        </div>
-                        <div className="data">
-                            <span>Number of plastic bags used:</span>
-                            <input type="text" value={bags} onChange={(event) => setBags(handleNumbers(event.target.value))} maxLength={4}/>
-                        </div>
-                        <div className="data">
-                            <span>Area cleaned (m^2):</span>
-                            <input type="text" value={distance} onChange={(event) => setDistance(handleNumbers(event.target.value))} maxLength={4}/>
-                        </div>
-                    </div>
-                    <div className="inf" style={{marginRight: "0px"}}>
-                        <span>Additional information:</span>
-                        <textarea name="Text1" rows="8" onChange={(event) => setAddInfo(event.target.value)} style={{padding: "15px", fontSize: "18px"}}/>
-                    </div>
-                    <button className="cert btn" onClick={() => handleSendReport()}>SEND REPORT</button>
-                </div>
-                <div className="eventinfo">
-                    <input
-                        className="search"
-                        type="text"
-                        placeholder="Search for the volunteer"
-                        style={{margin: "0px"}}
-                        onChange={(event) => setSearch(event.target.value)}
-                    />
-                    <table>
-                        <tr>
-                            <th>№</th>
-                            <th style={{textAlign: "left"}}>Name of volunteer</th>
-                            <th>Came</th>
-                        </tr>
-                        {arraySF?.map((item, index) =>
-                                <tr
-                                    key={index}
-                                    style={{backgroundColor: filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.attended?.find(user => user.email === item.email) ? "lightgreen" : "" : "" : ""}}
+                                            value={item}
+                                        >{item}</option>
+                                    )}
+                                </select>
+                            </div>
+                            <div className="data">
+                                <span>Location:</span>
+                                <select
+                                    onChange={(event) => {
+                                        setEventId(event.target.value);
+                                    }}
                                 >
-                                    <td>{index + 1}</td>
-                                    <td style={{textAlign: "left"}}>{item.firstName + " " + item.secondName}</td>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            style={{margin: "0px", width: "auto"}}
-                                            onChange={() => handleItemCame(item.email)}
-                                            checked={item.came}/>
-                                    </td>
-                                </tr>
-                            )
-                        }
-                    </table>
+                                    {filteredEvents 
+                                        ? filteredEvents.map((item, index) => 
+                                            <option
+                                                key={index}
+                                                value={index}
+                                            >{item.location}</option>)
+                                        : <></>}
+                                </select>
+                            </div>
+                            <div className="data">
+                                <span>Number of plastic bags used:</span>
+                                <input type="text" value={bags} onChange={(event) => setBags(handleNumbers(event.target.value))} maxLength={4}/>
+                            </div>
+                            <div className="data">
+                                <span>Area cleaned (m^2):</span>
+                                <input type="text" value={distance} onChange={(event) => setDistance(handleNumbers(event.target.value))} maxLength={4}/>
+                            </div>
+                        </div>
+                        <div className="inf" style={{marginRight: "0px"}}>
+                            <span>Additional information:</span>
+                            <textarea name="Text1" rows="8" onChange={(event) => setAddInfo(event.target.value)} style={{padding: "15px", fontSize: "18px"}}/>
+                        </div>
+                        <button className="cert btn" onClick={() => handleSendReport()}>SEND REPORT</button>
+                    </div>
+                    <div className="eventinfo">
+                        <input
+                            className="search"
+                            type="text"
+                            placeholder="Search for the volunteer"
+                            style={{margin: "0px"}}
+                            onChange={(event) => setSearch(event.target.value)}
+                        />
+                        <table>
+                            <tr>
+                                <th>№</th>
+                                <th style={{textAlign: "left"}}>Name of volunteer</th>
+                                <th>Came</th>
+                            </tr>
+                            {arraySF?.map((item, index) =>
+                                    <tr
+                                        key={index}
+                                        style={{backgroundColor: filteredEvents ? filteredEvents[eventid] ? filteredEvents[eventid]?.attended?.find(user => user?.email === item?.email) ? "lightgreen" : "" : "" : ""}}
+                                    >
+                                        <td>{index + 1}</td>
+                                        <td style={{textAlign: "left"}}>{item.name ? item.name : item.firstName + " " + item.secondName}</td>
+                                        <td>
+                                            <input
+                                                type="checkbox"
+                                                style={{margin: "0px", width: "auto"}}
+                                                onChange={() => handleItemCame(item?.email)}
+                                                checked={item?.came}/>
+                                        </td>
+                                    </tr>
+                                )
+                            }
+                        </table>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

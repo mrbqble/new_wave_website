@@ -14,13 +14,12 @@ export const Event = () => {
 
     let date;
     const [isAttended, setIsAttended] = useState(false);
-    const {user, setEvents, events, current, setCurrent, months, setAlert, setTitle, setText, setButton} = useContext(DefaultContext);
+    const {user, events, current, setCurrent, months, setAlert, setTitle, setText, setButton} = useContext(DefaultContext);
 
     const handleAttend = () => {
         if (user.email && !isAttended) {
-            attend(user.email, user.firstName + " " + user.secondName, events[current]._id).then(() => {
+            attend(user.email, events[current]._id).then(() => {
                 setIsAttended(true);
-                getEvents().then(response => setEvents(response));
             }
             );
         } else {
@@ -34,7 +33,6 @@ export const Event = () => {
     const handleLeave = () => {
         leave(user.email, events[current]._id).then(() => {
             setIsAttended(false);
-            getEvents().then(response => setEvents(response));
         });
     }
 
@@ -106,16 +104,6 @@ export const Event = () => {
                                     ? <a className='join btn' onClick={() => handleLeave()}>LEAVE EVENT</a>
                                     : <a className='cert btn' onClick={() => handleAttend()}>ATTEND EVENT</a>
                                 }
-                                <div>
-                                    <p className="text">List of volunteers attending the event:</p>
-                                    <div className="list">
-                                        {item.attended.map((item, index) => 
-                                            <div key={index}>
-                                                <p className="text" style={{marginBottom: "0px"}}>{index + 1}. {item.name}</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
                             </div>
                             <div className="eventinfo">
                                 <img src={item.image} alt="event" style={{height: '770px', width: "770px"}}/>

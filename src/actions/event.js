@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const link1 = `https://frozen-thicket-00434.herokuapp.com/api/event`;
-const link = `http://localhost:1500/api/auth`;
+const link = `https://frozen-thicket-00434.herokuapp.com/api/event`;
+const link1 = `http://localhost:1500/api/event`;
 
 export const getEvents = async () => {
     const response = await axios.post(`${link}/events`);
@@ -13,8 +13,8 @@ export const getAllEvents = async () => {
     return response.data;
 };
 
-export const attend = async (email, name, _id) => {
-    await axios.post(`${link}/attend`, {email, name, _id});
+export const attend = async (email, _id) => {
+    await axios.post(`${link}/attend`, {email, _id});
 };
 
 export const leave = async (email, _id) => {

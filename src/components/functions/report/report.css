@@ -13,15 +13,15 @@
 }
 
 th, td {
-    padding: 20px;
+    padding: 15px;
     font-size: 18px;
     border-bottom: 1px solid black;
-    text-align: center;
 }
 
 th {
     font-weight: 500;
     color: #0013BC;
+    text-align: left;
 }
 
 table {
