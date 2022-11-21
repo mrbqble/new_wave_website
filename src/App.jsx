@@ -20,6 +20,7 @@ import { Verificator } from './components/functions/verification';
 import { Document } from './components/functions/documents';
 import { ChangeStatus } from './components/functions/admin/ChangeStatus';
 import { EventList } from "./components/functions/admin/EventList";
+// import AdminPage from "./components/functions/adminpage/AdminPage";
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

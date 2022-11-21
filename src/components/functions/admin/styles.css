@@ -1,0 +1,112 @@
+.admin-page-div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 2vw;
+    padding-top: 12vh;
+    padding-bottom: 5vh;
+}
+
+.leftdiv {
+    flex-basis: 35vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+.rightdiv {
+    flex-basis: 42vw;
+    height: 50vh;
+    background-color: #FFFFFF;
+    border-radius: 13px;
+    border: 1px solid rgb(111, 111, 111);
+}
+.admin-profile {
+    background-color: #FFFFFF;
+    border-radius: 13px;
+    border: 1px solid rgb(111, 111, 111);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 27vh;
+    max-height: 20vh;
+    padding-left: 25px;
+}
+.pfp-cropping {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.profile-img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+div > div > h1 {
+    margin-bottom: 0;
+}
+.finances-inventory {
+    background-color: #FFFFFF;
+    border-radius: 13px;
+    border: 1px solid rgb(111, 111, 111);
+    padding-left: 25px;
+    padding-top: 16px;
+}
+.finances-inventory > a {
+    font-size: 32pt;
+    font-family: 'Inter';
+}
+hr {
+    width: 100%;
+    margin: 0;
+    width: 95%;
+}
+.hone-admin {
+    text-align: left;
+    font-size: 50px;
+}
+.rasxodi-admin {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-top: 20px;
+    justify-content: space-between;
+}
+.otchet-btn {
+    min-height: 20px;
+    background-color: #0013BC;
+    text-decoration: none;
+    display: block;
+    color: white;
+    width: 95%;
+    height: 6vh;
+    padding-top: 10px;
+    text-align: center;
+}
+.otchet-btn:hover {
+    background-color: white;
+    color: #0013BC;
+    border: 1px solid #0013BC;
+}
+h3 {
+    font-weight: 300;
+    font-size: 17px;
+}
+.list-of-reports-finances {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.report-finances {
+    display: flex;
+    flex-direction: row;
+}
+.list-of-reports-finances > p {
+    font-size: 10px;
+}
