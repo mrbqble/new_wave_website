@@ -15,9 +15,9 @@
     gap: 2vh;
 }
 .rightdiv {
-    padding: 20px 25px 10px 25px;
+    padding: 25px 25px 25px 25px;
     flex-basis: 42vw;
-    height: 70vh;
+    height: fit-content;
     background-color: #FFFFFF;
     border-radius: 13px;
     border: 1px solid rgb(111, 111, 111);
@@ -54,7 +54,7 @@ div > div > h1 {
     background-color: #FFFFFF;
     border-radius: 13px;
     border: 1px solid rgb(111, 111, 111);
-    padding: 20px 25px 10px 25px;
+    padding: 25px 25px 25px 25px;
 }
 .finances-inventory > a {
     font-size: 32pt;
@@ -67,7 +67,7 @@ hr {
 }
 .hone-admin {
     text-align: left;
-    font-size: 3.3em;
+    font-size: 3.1em;
 }
 .rasxodi-admin {
     display: flex;
@@ -85,7 +85,7 @@ hr {
     justify-content: center;
     color: white;
     width: 100%;
-    height: 9vh;
+    height: 7.5vh;
     border: 1px solid #0013BC;
 }
 .otchet-btn:hover, .spisat-btn:hover {
@@ -125,13 +125,14 @@ h3 {
 .trati-btn {
     background-color: white;
     border: 1px solid grey;
+    font-weight: 500;
     color: black;
 }
 .spisat-btn {
     min-width: 47.5%;
     background-color: #0013BC;
     color: white;
-    height: 9vh;
+    height: 7.5vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,12 +169,15 @@ h3 {
 .list-of-events {
     display: flex;
     flex-direction: column;
+    gap: 1vh;
 }
 .right-events {
     display: flex;
     flex-direction: column;
     width: 100%;
+    gap: 0.9vh;
     margin-top: 2vh;
+    border-bottom: 1px solid #DEDEDE;
 }
 .event-status {
     display: inline-flex;
@@ -184,17 +188,135 @@ h3 {
     align-items: center;
     width: fit-content;
     border-radius: 0.5vh;
-    padding: 9px 12px 9px 9px;
+    padding: 6px 9px 6px 9px;
     background-color: #fafafa;
 }
 .span-text-status {
     margin-left: 8px;
     font-weight: 500;
+    font-size: 0.9em;
 }
 .name-of-meropr {
     width: 100%;
     height: fit-content;
-    margin-top: 8px;
     font-size: 1.15em;
-    font-weight: 530;
+    font-weight: 520;
+    margin-top: 1vh;
+}
+.last-row-event {
+    display: flex;
+    margin-bottom: 2vh;
+}
+.list-of-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+.a-task {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 4px 7px 4px;
+    height: fit-content;
+}
+.delegate-div {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    border: 1px solid grey;
+    padding: 11px 9px 11px 9px;
+    border-radius: 3px;
+}
+.delegate-btn {
+    font-weight: 600;
+}
+.first-part-task {
+    display: flex;
+}
+.task-check {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+
+/* checkbox styles */
+.checkbox > input {
+    height: 20px;
+    width: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: 1em;
+}
+.checkbox {
+    --background: #fff;
+    --border: #d1d6ee;
+    --border-hover: #bbc1e1;
+    --border-active: #1e2235;
+    --tick: #fff;
+    position: relative;
+}
+.checkbox input, .checkbox svg {
+    width: 21px;
+    height: 21px;
+    display: block;
+}
+.checkbox input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    outline: none;
+    background: var(--background);
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: box-shadow 0.3s;
+    box-shadow: inset 0 0 0 var(--s, 1px) var(--b, var(--border));
+}
+.checkbox input:hover {
+    --s: 2px;
+    --b: var(--border-hover);
+}
+.checkbox input:checked {
+    --b: var(--border-active);
+}
+.checkbox svg {
+    pointer-events: none;
+    fill: none;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: var(--stroke, var(--border-active));
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 21px;
+    height: 21px;
+    transform: scale(var(--scale, 1)) translateZ(0);
+}
+.checkbox.path input:checked {
+    --s: 2px;
+    transition-delay: 0.4s;
+}
+.checkbox.path input:checked + svg {
+    --a: 16.1 86.12;
+    --o: 102.22;
+}
+.checkbox.path svg {
+    stroke-dasharray: var(--a, 86.12);
+    stroke-dashoffset: var(--o, 86.12);
+    transition: stroke-dasharray 0.6s, stroke-dashoffset 0.6s;
+}
+.second-col-task {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+.from-coordinator {
+    width: 1.5vw;
+    height: 1.5vw;
+    border-radius: 50%;
 }
