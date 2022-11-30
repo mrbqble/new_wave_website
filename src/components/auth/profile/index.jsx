@@ -5,8 +5,10 @@ import { getCertificate } from '../../../actions/user';
 import { useNavigate } from 'react-router-dom';
 import { DefaultContext } from "../../../Context";
 import { profilePhoto } from '../../../actions/user';
-import Compressor from 'compressorjs';
 import { saveAs } from 'file-saver';
+import { storage } from "./../../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 export const Profile = () => {
 
@@ -41,18 +43,19 @@ export const Profile = () => {
         }
     };
 
-    const getBase64 = (file) => {
-        var reader = new FileReader();
-        new Compressor(file, {
-            quality: 0.1,
-            success: (res) => {      
-                reader.readAsDataURL(res);
-                reader.onload = function () {
-                    profilePhoto(user.email, reader.result);
-                    setUser({...user, photo: reader.result});
-                };
-            },
-        });
+    const uploadImage = async (file) => {
+        if (file === null) return;
+        const imageRef = ref(storage, `users/${file.name + v4()}`);
+        await uploadBytes(imageRef, file).then(async (res) => {
+            if (user.photo) {
+                const pictureRef = storage.refFromURL(user.photo);
+                pictureRef.delete();
+            }
+            await getDownloadURL(res.ref).then(async (url) => {
+                setUser({...user, photo: url});
+                profilePhoto(user.email, url);
+            });
+        })
     }
 
     return (
@@ -136,7 +139,7 @@ export const Profile = () => {
                         <input
                             type="file"
                             className='photo'
-                            onChange={(event) => getBase64(event.target.files[0])}
+                            onChange={(event) => uploadImage(event.target.files[0])}
                         />
                     </div>
                     <a

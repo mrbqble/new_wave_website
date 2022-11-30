@@ -1,11 +1,13 @@
 import "./createEvent.css";
-import Compressor from 'compressorjs';
 import { DefaultContext } from "../../../Context";
 import { Input } from "../../auth/fullform/Input";
 import { Select } from "../../auth/fullform/Select";
 import { createEvent } from '../../../actions/event';
 import { getCoordinators } from '../../../actions/user';
 import React, { useState, useEffect, useContext } from "react";
+import { storage } from "./../../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 const formats = ["Offline", "Online"];
 const types = ["Cleaning day", "Tree planting", "Shelter visiting"];
@@ -18,6 +20,7 @@ export const CreateEvent = () => {
     const [partner, setPartner] = useState("");
     const { edu } = useContext(DefaultContext);
     const [organizator, setOrganizator] = useState();
+    const [image, setImage] = useState();
     const [item, setItem] = useState({
         title: "",
         text: "",
@@ -43,17 +46,15 @@ export const CreateEvent = () => {
         return value ? parseInt(value.replace(/[^0-9\s]/g, "")) : 0;
     };
 
-    const getBase64 = (file) => {
-        var reader = new FileReader();
-        new Compressor(file, {
-            quality: 0.1,
-            success: (res) => {      
-                reader.readAsDataURL(res);
-                reader.onload = function () {
-                    setItem({...item, image: reader.result});
-                };
-            },
-        });
+    const uploadImage = async (file) => {
+        if (item.image === null) return;
+        const imageRef = ref(storage, `events/${file.name + v4()}`);
+        await uploadBytes(imageRef, file).then(async (res) => {
+            await getDownloadURL(res.ref).then(async (url) => {
+                setItem({...item, image: url});
+            });
+        })
+        createEvent(item);
     }
 
     useEffect(() => {
@@ -87,7 +88,7 @@ export const CreateEvent = () => {
                         <Input
                             title="Image:"
                             type="file"
-                            onChange={(e) => getBase64(e.target.files[0])}
+                            onChange={(e) => setImage(e.target.files[0])}
                         />
                         <div className='frame'>
                             {item.image && <img src={item?.image} alt="Event image"/>}
@@ -247,7 +248,7 @@ export const CreateEvent = () => {
                         }
                     </div>
                 </div>
-                <a className="cert btn" onClick={() => createEvent(item)}>Submit</a>
+                <a className="cert btn" onClick={() => uploadImage(image)}>Submit</a>
             </form>
         </div>
     );

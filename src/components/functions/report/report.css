@@ -1,10 +1,11 @@
 .eventinfo .inf input {
     margin: 0px;
     width: 2.3vw;
+    text-align: right;
 }
 
 .report .eventinfo {
-    gap: 30px;
+    gap: 20px;
 }
 
 .data select {

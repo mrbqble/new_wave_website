@@ -18,11 +18,7 @@ export const Third = () => {
                     WATCH OUR STORY <img
                         src={bluarr}
                         alt="blue arrow"
-                        style={{
-                            width: '10px',
-                            height: '15px',
-                            alignItems: 'center'
-                        }}
+                        className='arr'
                     />
                 </a>
             </div>

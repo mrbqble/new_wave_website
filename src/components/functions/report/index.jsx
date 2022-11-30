@@ -5,10 +5,12 @@ import { useContext } from "react";
 import { getUsers, profile } from '../../../actions/user';
 import { DefaultContext } from "../../../Context";
 import { report } from "../../../actions/add";
+import { getAllEvents } from "../../../actions/event";
 
 export const Report = () => {
 
-    const {events, email, setUser, token, user} = useContext(DefaultContext);
+    const {email, setUser, token, user} = useContext(DefaultContext);
+    const [events, setEvents] = useState()
     const [type, setType] = useState('Cleaning day');
     const [eventid, setEventId] = useState(0);
     const [bags, setBags] = useState(0);
@@ -22,13 +24,7 @@ export const Report = () => {
 
     useEffect(() => {
         setFilteredEvents(events?.filter(item => item.type === type));
-    }, [events, type]);
-
-    useEffect(() => {
-        setUsers(filteredEvents 
-            ? [...filteredEvents[eventid]?.attended?.sort((a, b) => a.name.localeCompare(b.name)), users?.filter(item => !filteredEvents[eventid]?.attended?.find(att => att.email === item.email))] 
-            : users)
-    }, [eventid])
+    }, [events, type])
 
     useEffect(() => {
         getUsers().then(res => setUsers(res))
@@ -51,6 +47,14 @@ export const Report = () => {
     const handleNumbers = (value) => {
         return value ? parseInt(value.replace(/[^0-9\s]/g, "")) : 0;
     }
+
+    const getEvents = async () => {
+        await getAllEvents().then(res => setEvents(res));
+    }
+
+    useEffect(() => {
+        getEvents();
+    }, [])
 
     const arraySF = users?.filter(item => (item?.firstName + " " + item?.secondName).substring(0, search.length).toLowerCase() === search.toLowerCase());
 

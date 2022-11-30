@@ -9,9 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { DefaultContext } from "../../../Context";
 import { EffectCreative, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-
 
 export const Carousel = () => {
 

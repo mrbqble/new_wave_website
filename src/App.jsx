@@ -15,11 +15,11 @@ import { Report } from "./components/functions/report/index";
 import { Registration } from './components/auth/registration';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { getEducation } from './actions/add';
-import { getEvents } from './actions/event';
+import { getAllEvents } from './actions/event';
 import { Verificator } from './components/functions/verification';
 import { Document } from './components/functions/documents';
 import { ChangeStatus } from './components/functions/admin/ChangeStatus';
-import { EventList } from "./components/functions/admin/EventList";
+import { EventList } from "./components/functions/eventList/index";
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -54,7 +54,7 @@ function App() {
 };
   
   useEffect(() => {
-    getEvents().then(response => setEvents(response));
+    getAllEvents().then(response => setEvents(response));
     getEducation().then(response => setEdu(response));
     profile(email, token).then(response => setUser(response));
   }, []);

@@ -5,6 +5,7 @@ const link1 = `http://localhost:1500/api/event`;
 
 export const getEvents = async () => {
     const response = await axios.post(`${link}/events`);
+    console.log(response.data);
     return response.data;
 };
 
