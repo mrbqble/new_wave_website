@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const link = `https://frozen-thicket-00434.herokuapp.com/api/add`;
+const link = `https://new-wave-server.onrender.com/api/add`;
 const link1 = `http://localhost:1500/api/add`;
 
 export const getReports = async () => {
