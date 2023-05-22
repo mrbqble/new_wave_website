@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const link = `https://frozen-thicket-00434.herokuapp.com/api/event`;
+const link = `https://new-wave-server.onrender.com/api/event`;
 const link1 = `http://localhost:1500/api/event`;
 
 export const getEvents = async () => {
